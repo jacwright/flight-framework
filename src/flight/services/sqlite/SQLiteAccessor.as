@@ -8,11 +8,10 @@ package flight.services.sqlite
 	
 	import flight.net.IResponse;
 	import flight.net.Response;
+	import flight.services.interfaces.IAccessor;
+	import flight.services.interfaces.IMapper;
+	import flight.services.interfaces.IModel;
 	import flight.vo.ValueObject;
-	
-	import flx.service.interfaces.IAccessor;
-	import flx.service.interfaces.IMapper;
-	import flx.service.interfaces.IModel;
 
 	public class SQLiteAccessor implements IAccessor
 	{

@@ -15,15 +15,14 @@ package flight.services.http
 	import flight.log.MessageLog;
 	import flight.net.IResponse;
 	import flight.net.Response;
+	import flight.services.interfaces.IAccessor;
+	import flight.services.interfaces.IMapper;
+	import flight.services.interfaces.IModel;
+	import flight.services.net.AMFMessage;
+	import flight.services.net.URLCredentials;
+	import flight.services.net.URLRequestFormat;
+	import flight.services.net.URLRequestMethod;
 	import flight.utils.ObjectEditor;
-	
-	import flx.service.interfaces.IAccessor;
-	import flx.service.interfaces.IMapper;
-	import flx.service.interfaces.IModel;
-	import flx.service.net.AMFMessage;
-	import flx.service.net.URLCredentials;
-	import flx.service.net.URLRequestFormat;
-	import flx.service.net.URLRequestMethod;
 
 	public class HTTPAccessor implements IAccessor
 	{

@@ -1,10 +1,9 @@
 package flight.services.abstracts
 {
+	import flight.services.interfaces.IModel;
 	import flight.utils.ObjectEditor;
 	import flight.utils.getClassName;
 	import flight.vo.ValueObject;
-	
-	import flx.service.interfaces.IModel;
 
 	public class AbstractModel extends ValueObject implements IModel
 	{

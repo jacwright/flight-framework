@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
-<classEntry path="flx.service.interfaces.IMapper"/>
-<classEntry path="flx.service.abstracts.AbstractMapper"/>
-<classEntry path="flx.service.sqlite.db.Expr"/>
-<classEntry path="flx.service.http.HTTPMapper"/>
-<classEntry path="flx.service.net.URLRequestMethod"/>
-<classEntry path="flx.utils.ArrayUtil"/>
-<classEntry path="flx.service.http.HTTPAccessor"/>
-<classEntry path="flx.service.net.AMFMessage"/>
-<classEntry path="flx.service.sqlite.SQLiteAccessor"/>
-<classEntry path="flx.service.sqlite.SQLiteMapper"/>
-<classEntry path="flx.utils.StringUtil"/>
-<classEntry path="flx.service.interfaces.IModel"/>
-<classEntry path="flx.service.net.URLRequestFormat"/>
-<classEntry path="flx.service.sqlite.db.SelectException"/>
-<classEntry path="flx.service.net.URLCredentials"/>
+<classEntry path="flight.services.abstracts.AbstractMapper"/>
+<classEntry path="flight.services.abstracts.AbstractModel"/>
+<classEntry path="flight.services.http.HTTPAccessor"/>
+<classEntry path="flight.services.http.HTTPMapper"/>
+<classEntry path="flight.services.interfaces.IAccessor"/>
+<classEntry path="flight.services.interfaces.IMapper"/>
+<classEntry path="flight.services.interfaces.IModel"/>
+<classEntry path="flight.services.net.AMFMessage"/>
+<classEntry path="flight.services.net.URLCredentials"/>
+<classEntry path="flight.services.net.URLRequestFormat"/>
+<classEntry path="flight.services.net.URLRequestMethod"/>
+<classEntry path="flight.services.sqlite.SQLiteAccessor"/>
+<classEntry path="flight.services.sqlite.SQLiteMapper"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>

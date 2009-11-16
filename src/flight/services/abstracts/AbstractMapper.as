@@ -4,9 +4,8 @@ package flight.services.abstracts
 	import flash.utils.Dictionary;
 	
 	import flight.errors.AbstractMethodCallError;
+	import flight.services.interfaces.IMapper;
 	import flight.utils.getType;
-	
-	import flx.service.interfaces.IMapper;
 	
 	public class AbstractMapper implements IMapper
 	{ 	

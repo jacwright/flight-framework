@@ -1,6 +1,6 @@
 package flight.services.sqlite
 {
-	import flx.service.abstracts.AbstractMapper;
+	import flight.services.abstracts.AbstractMapper;
 
 	public class SQLiteMapper extends AbstractMapper
 	{

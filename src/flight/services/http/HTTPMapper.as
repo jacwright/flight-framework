@@ -1,10 +1,6 @@
 package flight.services.http
 {
-	import flight.utils.getClassName;
-	import flight.utils.getType;
-	
-	import flx.service.abstracts.AbstractMapper;
-	import flx.service.interfaces.IModel;
+	import flight.services.abstracts.AbstractMapper;
 	
 	public class HTTPMapper extends AbstractMapper
 	{
