@@ -1,19 +1,25 @@
 package flight.services.http
 {
 	import flight.services.abstracts.AbstractMapper;
+	import flight.services.net.URLRequestFormat;
 	
 	public class HTTPMapper extends AbstractMapper
 	{
-		public var baseUrl:String 			= ''; 		
+		public var baseUrl:String 				= ''; 	
+		public var format:String				= '';	
 		
-		public function HTTPMapper(baseUrl:String)
+		public function HTTPMapper(baseUrl:String, format:String=URLRequestFormat.JSON)
 		{
 			this.baseUrl = baseUrl;
+			this.format  = format;
 		}
 		
 		override public function map(resource:Object, params:Object=null):String
 		{
 			var location:String = getLocation(resource);
+			if(!location) {
+				throw new Error("Mapper could not find map to resource: " + resource);
+			} 
 			return resolve(location, params); 
 		}
 		

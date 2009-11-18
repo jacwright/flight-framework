@@ -20,7 +20,6 @@ package flight.services.http
 	import flight.services.interfaces.IModel;
 	import flight.services.net.AMFMessage;
 	import flight.services.net.URLCredentials;
-	import flight.services.net.URLRequestFormat;
 	import flight.services.net.URLRequestMethod;
 	import flight.utils.ObjectEditor;
 
@@ -31,6 +30,7 @@ package flight.services.http
 		public var enableCaching:Boolean = true;
 		public var findInCacheFunction:Function;
 		public var storeInCacheFunction:Function;
+		public var deleteFromCacheFunction:Function;
 		public var urlVariables:URLVariables;
 		
 		private var cache:Dictionary = new Dictionary(true);
@@ -42,6 +42,7 @@ package flight.services.http
 			
 			findInCacheFunction = findInCache;
 			storeInCacheFunction = storeInCache;
+			deleteFromCacheFunction = deleteFromCache;
 		}
 		
 		/**
@@ -69,10 +70,10 @@ package flight.services.http
 		 */		
 		public function execSave(resourceType:Object, data:IModel, params:Object=null):IResponse
 		{
-			if(IModel(data).isNew) {
+			if(IModel(data).isNew()) {
 				return execPost(resourceType, data, params);
 			} 
-			return execUpdate(resourceType, data, params);
+			return execPut(resourceType, data, params);
 		}
 
 		/**
@@ -91,9 +92,15 @@ package flight.services.http
 			var serializedData:Object = (data is IModel) ? IModel(data).serialize() : data;
 			
 			var response:IResponse = load(route, URLRequestMethod.POST, serializedData);
+				response.addResultHandler(onPost);
 				response.addFaultHandler(onFault);
 			
 			return response;
+		}
+		
+		protected function onPost(response:Object):void
+		{
+			storeInCache(cache, response.data);
 		}
 		
 		/**
@@ -103,14 +110,29 @@ package flight.services.http
 		 * @return 
 		 * 
 		 */		
-		public function execUpdate(resourceType:Object, data:Object, params:Object=null):IResponse
+		public function execPut(resourceType:Object, data:Object, params:Object=null):IResponse
 		{
 			var route:String = mapper.map(resourceType, params);
 			
 			var response:IResponse = load(route, URLRequestMethod.PUT, data);
+				response.addResultHandler(onPut);
 				response.addFaultHandler(onFault);
 			
 			return response;
+		}
+		
+		private function onPut(result:Object):void
+		{
+			var list:Array = (result.data is Array) ? result.data : [result.data];
+			for(var e:String in list) {
+				var lookupItem:Object = findInCacheFunction(cache, list[e]);
+				if(lookupItem != null) {
+					ObjectEditor.merge(list[e], lookupItem);
+					list[e] = lookupItem;
+				} else {
+					storeInCache(cache, list[e]);
+				}
+			}
 		}
 		
 		/**
@@ -124,9 +146,15 @@ package flight.services.http
 			var route:String = mapper.map(resourceType, params);
 			
 			var response:IResponse = load(route, URLRequestMethod.DELETE);
+				response.addResultHandler(onDelete);
 				response.addFaultHandler(onFault);
 			
 			return response;
+		}
+		
+		protected function onDelete(response:Object):void
+		{
+			deleteFromCache(cache, response.data);
 		}
 		
 		/**
@@ -194,6 +222,17 @@ package flight.services.http
 		}
 		
 		/**
+		 * Permanently removes an item from cache - using 'id' as primary key 
+		 * @param cache
+		 * @param item
+		 * 
+		 */		
+		private function deleteFromCache(cache:Dictionary, item:Object):void
+		{
+			delete cache[item.id];
+		}
+		
+		/**
 		 * 
 		 * @param conditions
 		 * @return 
@@ -253,10 +292,10 @@ package flight.services.http
 		{
 			var urlRequest:URLRequest = new URLRequest(url);
 				urlRequest.url = url;
-							
+
 			// set the response format (format of data returned)
-			urlVariables.format = URLRequestFormat.AMF;
-			
+			urlVariables.format = _mapper['format'];
+						
 			if(method == URLRequestMethod.PUT || method == URLRequestMethod.DELETE) {
 				urlVariables.method = method;
 				urlRequest.method = URLRequestMethod.POST;

@@ -14,9 +14,9 @@ package flight.services.interfaces
 		function set mapper(value:IMapper):void;
 		
 		function execPost(resourceType:Object, data:Object=null, params:Object=null):IResponse
-		function execUpdate(resourceType:Object, data:Object, params:Object=null):IResponse
-		function execDelete(resourceType:Object, params:Object=null):IResponse
 		function execGet(resourceType:Object, params:Object=null):IResponse
+		function execPut(resourceType:Object, data:Object, params:Object=null):IResponse
+		function execDelete(resourceType:Object, params:Object=null):IResponse
 				
 		function execSave(resourceType:Object, data:IModel, params:Object=null):IResponse
 	}

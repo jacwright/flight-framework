@@ -69,7 +69,7 @@ package flight.services.sqlite
 			return response;
 		}
 		
-		public function execUpdate(resourceType:Object, data:Object, params:Object=null):IResponse
+		public function execPut(resourceType:Object, data:Object, params:Object=null):IResponse
 		{
 			var table:String = mapper.map(resourceType, params);
 			

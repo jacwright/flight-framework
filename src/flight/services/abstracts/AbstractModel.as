@@ -16,20 +16,13 @@ package flight.services.abstracts
 		 * @return 
 		 * 
 		 */		
-		public function get isNew():Boolean
+		public function isNew():Boolean
 		{
 			if('id' in this) {
-				return this['id'] > 0;
+				return this['id'] < 1;
 			}
 			
 			return false;
-		}
-		
-		public function set isNew(value:Boolean):void
-		{
-			if('id' in this && value) {
-				this['id'] = null;
-			}
 		}
 		
 		/**
