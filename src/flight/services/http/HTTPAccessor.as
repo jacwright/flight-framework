@@ -10,6 +10,7 @@ package flight.services.http
 	import flash.net.URLVariables;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
 	
 	import flight.errors.ResponseError;
 	import flight.log.MessageLog;
@@ -200,9 +201,12 @@ package flight.services.http
 		private function findInCache(cache:Dictionary, item:Object):Object
 		{
 			if('id' in item) {
-				if(cache[item.id]) {
-					return cache[item.id];
-				}
+				var qualClassName:String = getQualifiedClassName(item)
+				if(cache[qualClassName]) {
+					if(cache[qualClassName][item.id]) {
+						return cache[item.id];
+					}	
+				}				
 			}
 			
 			return null;
@@ -217,7 +221,11 @@ package flight.services.http
 		private function storeInCache(cache:Dictionary, item:Object):void
 		{
 			if(enableCaching && 'id' in item) {
-				cache[item.id] = item;
+				var qualClassName:String = getQualifiedClassName(item)
+				if(cache[qualClassName] == null) {
+					cache[qualClassName] = new Object();
+				}
+				cache[qualClassName][item.id] = item;
 			}
 		}
 		
@@ -229,7 +237,10 @@ package flight.services.http
 		 */		
 		private function deleteFromCache(cache:Dictionary, item:Object):void
 		{
-			delete cache[item.id];
+			var qualClassName:String = getQualifiedClassName(item)
+			if(cache[qualClassName]){
+				delete cache[qualClassName][item.id];
+			}
 		}
 		
 		/**
