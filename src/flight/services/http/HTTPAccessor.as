@@ -359,7 +359,7 @@ package flight.services.http
 			return response;
 		}
 		
-		private function setUrlVariables(params:Object=null):void
+		protected function setUrlVariables(params:Object=null):void
 		{
 			urlVariables = new URLVariables();
 
@@ -368,7 +368,9 @@ package flight.services.http
 			}			
 			
 			for(var e:String in params) {
-				urlVariables[e] = params[e]
+				if(params[e] != null) {
+					urlVariables[e] = params[e].toString();
+				}
 			}
 		}
 		
